@@ -16,7 +16,11 @@ import Alerts from './pages/UiElements/Alerts';
 import Buttons from './pages/UiElements/Buttons';
 import DefaultLayout from './layout/DefaultLayout';
 import { isLoggedIn } from './utils/authUtils';
-import AuthLayout from "./layout/AuthLayout";
+import AuthLayout from './layout/AuthLayout';
+import UsersList from './pages/Users';
+import ProtectedRoute from './components/ProtectedRoutes/ProtectedRoute';
+import { UserRoleEnum } from './core/enum';
+import SitesList from "./pages/Sites";
 
 function App() {
   // const [loading, setLoading] = useState<boolean>(true);
@@ -35,7 +39,7 @@ function App() {
       <Routes>
         {isLoggedIn() ? (
           <Route element={<DefaultLayout />}>
-           {/* <DefaultLayout> */}
+            {/* <DefaultLayout> */}
             <Route
               index
               element={
@@ -61,6 +65,41 @@ function App() {
                   <PageTitle title="Profile | TailAdmin - Tailwind CSS Admin Dashboard Template" />
                   <Profile />
                 </>
+              }
+            />
+            <Route
+              path="/users"
+              element={
+                <ProtectedRoute
+                  element={
+                    <>
+                      <PageTitle title="Users" />
+                      <UsersList />
+                    </>
+                  }
+                  requiredRole={[UserRoleEnum.HSO]}
+                />
+              }
+            />
+            <Route
+              path="/sites"
+              element={
+                <ProtectedRoute
+                  element={
+                    <>
+                      <PageTitle title="Sites" />
+                      <SitesList />
+                    </>
+                  }
+                  requiredRole={[
+                    UserRoleEnum.HSO,
+                    UserRoleEnum.TECHNICIAN,
+                    UserRoleEnum.COACH,
+                    UserRoleEnum.CEO,
+                    UserRoleEnum.ADMIN,
+                    UserRoleEnum.FOOTBALL_DIRECTOR,
+                  ]}
+                />
               }
             />
             <Route

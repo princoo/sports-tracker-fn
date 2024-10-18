@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import countryList from 'react-select-country-list';
-import Breadcrumb from '../../components/Breadcrumbs/Breadcrumb';
 import LogoDark from '../../images/logo/logo-dark.svg';
 import Logo from '../../images/logo/logo.svg';
 import { useForm } from 'react-hook-form';
-import { Gender, SignUpPayload } from './redux/interface';
+import { SignUpPayload } from './redux/interface';
 import { useSignupMutation } from "./redux/api";
 
 const SignUp: React.FC = () => {
