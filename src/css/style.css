@@ -2,11 +2,16 @@
 @tailwind components;
 @tailwind utilities;
 
+.mantine-Autocomplete-dropdown {
+  z-index: 1001 !important;
+}
+
 @layer base {
   body {
     @apply font-satoshi font-normal text-base text-body bg-whiten relative z-1;
   }
 }
+
 
 @layer components {
 }

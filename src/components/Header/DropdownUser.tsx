@@ -10,8 +10,8 @@ const DropdownUser = () => {
   const [decodedUser, setdecodedUser] = useState<DecodedUser>();
   useEffect(() => {   
     if (isLoggedIn()) {
-      const user = decodeToken()!
-      setdecodedUser(user)
+      const user = decodeToken()
+      setdecodedUser(user!)
     }
   }, []);
   return (

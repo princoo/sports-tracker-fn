@@ -1,8 +1,9 @@
 import toast from 'react-hot-toast';
 import baseApi from '../../../core/baseApi';
-import { DefaultResponse } from '../../../core/types';
+import { DefaultResponse } from '../../../core/interface';
 import { LoginPayload, LoginResponse, SignUpPayload } from './interface';
 import { setToken } from "../../../redux/slices/tokenSlice";
+import { storage } from "../../../core/storage";
 
 export const authApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
@@ -16,6 +17,7 @@ export const authApi = baseApi.injectEndpoints({
         try {
           const { data } = await queryFulfilled;
           dispatch(setToken(data.result.data.access_token))
+          storage.setToken(data.result.data.access_token)
           toast.success(data.result.message);
         } catch ({ error }: any) {
           toast.error(error.data.message);

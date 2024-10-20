@@ -1,6 +1,8 @@
+import { store } from "../redux/store";
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 import { config } from './config';
 import { storage } from './storage';
+
 const baseApi = createApi({
   baseQuery: fetchBaseQuery({
     baseUrl: config.BACKEND_URL,

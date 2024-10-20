@@ -1,8 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
+import { GiSoccerField } from 'react-icons/gi';
 import SidebarLinkGroup from './SidebarLinkGroup';
 // import Logo from '../../images/logo/logo.svg';
-import Logo from '../../images/logo/sports_logo.svg'
+import Logo from '../../images/logo/sports_logo.svg';
+import { FaUsers } from 'react-icons/fa';
+import NavItem from '../NavItem';
+import { UserRoleEnum } from '../../core/enum';
 
 interface SidebarProps {
   sidebarOpen: boolean;
@@ -18,7 +22,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
 
   const storedSidebarExpanded = localStorage.getItem('sidebar-expanded');
   const [sidebarExpanded, setSidebarExpanded] = useState(
-    storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true'
+    storedSidebarExpanded === null ? false : storedSidebarExpanded === 'true',
   );
 
   // close on click outside
@@ -59,14 +63,16 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
   return (
     <aside
       ref={sidebar}
-      className={`absolute left-0 top-0 z-9999 flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
+      className={`absolute left-0 top-0  flex h-screen w-72.5 flex-col overflow-y-hidden bg-black duration-300 ease-linear dark:bg-boxdark lg:static lg:translate-x-0 ${
         sidebarOpen ? 'translate-x-0' : '-translate-x-full'
       }`}
     >
       {/* <!-- SIDEBAR HEADER --> */}
       <div className="flex items-center justify-between gap-2 px-6 py-5.5 lg:py-6.5">
-        <NavLink to="/" >
-        <h1 className="text-lg text-white font-bold tracking-widest">TRACKER</h1>
+        <NavLink to="/">
+          <h1 className="text-lg text-white font-bold tracking-widest">
+            TRACKER
+          </h1>
         </NavLink>
 
         <button
@@ -185,7 +191,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                                 (isActive && '!text-white')
                               }
                             >
-                              eCommerce
+                              Tracker
                             </NavLink>
                           </li>
                         </ul>
@@ -198,7 +204,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               {/* <!-- Menu Item Dashboard --> */}
 
               {/* <!-- Menu Item Calendar --> */}
-              <li>
+              {/* <li>
                 <NavLink
                   to="/calendar"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -221,7 +227,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </svg>
                   Calendar
                 </NavLink>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Calendar --> */}
 
               {/* <!-- Menu Item Profile --> */}
@@ -249,9 +255,30 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                       fill=""
                     />
                   </svg>
-                  Users
+                  Profile
                 </NavLink>
               </li>
+              <NavItem
+                label="Users"
+                path="/users"
+                pathName="users"
+                icon={<FaUsers />}
+                requiredRole={[UserRoleEnum.HSO]}
+              />
+              <NavItem
+                label="Sites"
+                path="/sites"
+                pathName="sites"
+                icon={<GiSoccerField />}
+                requiredRole={[
+                  UserRoleEnum.HSO,
+                  UserRoleEnum.TECHNICIAN,
+                  UserRoleEnum.COACH,
+                  UserRoleEnum.CEO,
+                  UserRoleEnum.ADMIN,
+                  UserRoleEnum.FOOTBALL_DIRECTOR,
+                ]}
+              />
               {/* <!-- Menu Item Profile --> */}
 
               {/* <!-- Menu Item Forms --> */}
@@ -604,7 +631,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 }}
               </SidebarLinkGroup>
               {/* <!-- Menu Item Ui Elements --> */}
-
 
               {/* <!-- Menu Item Auth Pages --> */}
             </ul>
