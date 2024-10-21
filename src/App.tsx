@@ -20,7 +20,13 @@ import AuthLayout from './layout/AuthLayout';
 import UsersList from './pages/Users';
 import ProtectedRoute from './components/ProtectedRoutes/ProtectedRoute';
 import { UserRoleEnum } from './core/enum';
-import SitesList from "./pages/Sites";
+import SitesList from './pages/Sites';
+import PlayersList from './pages/Players';
+// import SelectSite from './pages/Players/SelectSite';
+import Home from './pages/Home';
+// import Tests from "./pages/tests";
+import Tests from "./pages/tests/index copy";
+import SessionsList from "./pages/Sessions";
 
 function App() {
   // const [loading, setLoading] = useState<boolean>(true);
@@ -37,6 +43,15 @@ function App() {
   return (
     <>
       <Routes>
+        <Route
+          path="/"
+          element={
+            <>
+              <PageTitle title="Home Page" />
+              <Home />
+            </>
+          }
+        />
         {isLoggedIn() ? (
           <Route element={<DefaultLayout />}>
             {/* <DefaultLayout> */}
@@ -98,6 +113,62 @@ function App() {
                     UserRoleEnum.CEO,
                     UserRoleEnum.ADMIN,
                     UserRoleEnum.FOOTBALL_DIRECTOR,
+                  ]}
+                />
+              }
+            />
+            <Route
+              path="/players"
+              element={
+                <ProtectedRoute
+                  element={
+                    <>
+                      <PageTitle title="Players" />
+                      <PlayersList />
+                    </>
+                  }
+                  requiredRole={[
+                    UserRoleEnum.HSO,
+                    UserRoleEnum.TECHNICIAN,
+                    UserRoleEnum.COACH,
+                    UserRoleEnum.CEO,
+                    UserRoleEnum.ADMIN,
+                    UserRoleEnum.FOOTBALL_DIRECTOR,
+                  ]}
+                />
+              }
+            />
+            <Route
+              path="/tests"
+              element={
+                <ProtectedRoute
+                  element={
+                    <>
+                      <PageTitle title="Tests" />
+                      <Tests />
+                    </>
+                  }
+                  requiredRole={[
+                    UserRoleEnum.HSO,
+                    UserRoleEnum.ADMIN,
+                  ]}
+                />
+              }
+            />
+            <Route
+              path="/sessions"
+              element={
+                <ProtectedRoute
+                  element={
+                    <>
+                      <PageTitle title="Sessions" />
+                      <SessionsList />
+                    </>
+                  }
+                  requiredRole={[
+                    UserRoleEnum.HSO,
+                    UserRoleEnum.COACH,
+                    UserRoleEnum.ADMIN,
                   ]}
                 />
               }

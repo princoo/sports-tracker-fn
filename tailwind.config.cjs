@@ -22,7 +22,8 @@ module.exports = {
         white: '#FFFFFF',
         black: {
           ...colors.black,
-          DEFAULT: '#1C2434',
+          DEFAULT: '#004074',
+          // DEFAULT: '#1C2434',
           2: '#010101',
         },
         red: {
@@ -34,6 +35,12 @@ module.exports = {
         bodydark1: '#DEE4EE',
         bodydark2: '#8A99AF',
         primary: '#3C50E0',
+        theme:{
+          light:"#104D87",
+          dark:"#0D2847",
+          secondary:"#003362",
+          white:"#EEEEEE"
+        },
         secondary: '#80CAEE',
         stroke: '#E2E8F0',
         gray: {
@@ -50,7 +57,8 @@ module.exports = {
         graydark: '#333A48',
         whiten: '#F1F5F9',
         whiter: '#F5F7FD',
-        boxdark: '#24303F',
+        boxdark: '#0D2847',
+        // boxdark: '#24303F',
         'boxdark-2': '#1A222C',
         strokedark: '#2E3A47',
         'form-strokedark': '#3d4d60',

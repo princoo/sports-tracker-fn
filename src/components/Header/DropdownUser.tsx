@@ -2,6 +2,8 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import ClickOutside from '../ClickOutside';
 import UserOne from '../../images/user/user-01.png';
+import { SlUser, SlUserFemale } from 'react-icons/sl';
+
 // import { useAppSelector } from "../../redux/hooks";
 import { DecodedUser, decodeToken, isLoggedIn, logOut } from "../../utils/authUtils";
 
@@ -28,8 +30,9 @@ const DropdownUser = () => {
           <span className="block text-xs">{decodedUser?.role.roleName}</span>
         </span>
 
-        <span className="h-12 w-12 rounded-full">
-          <img src={UserOne} alt="User" />
+        <span className="h-12 w-12 rounded-full bg-gray-200 dark:bg-gray-500 flex justify-center items-center">
+          {/* <img src={UserOne} alt="User" /> */}
+          <SlUser className="text-3xl"/>
         </span>
 
         <svg
@@ -52,7 +55,7 @@ const DropdownUser = () => {
       {/* <!-- Dropdown Start --> */}
       {dropdownOpen && (
         <div
-          className={`absolute right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark`}
+          className={`absolute  right-0 mt-4 flex w-62.5 flex-col rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark`}
         >
           <ul className="flex flex-col gap-5 border-b border-stroke px-6 py-7.5 dark:border-strokedark">
             <li>

@@ -2,7 +2,8 @@ import { Link } from 'react-router-dom';
 import DropdownMessage from './DropdownMessage';
 import DropdownNotification from './DropdownNotification';
 import DropdownUser from './DropdownUser';
-import LogoIcon from '../../images/logo/logo-icon.svg';
+// import LogoIcon from '../../images/logo/logo-icon.svg';
+import T_Logo from '../../images/logo/t_logo.png';
 import DarkModeSwitcher from './DarkModeSwitcher';
 import { isLoggedIn } from '../../utils/authUtils';
 
@@ -11,7 +12,7 @@ const Header = (props: {
   setSidebarOpen: (arg0: boolean) => void;
 }) => {
   return (
-    <header className="sticky top-0 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
+    <header className="z-50 sticky top-0 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
       <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
           {/* <!-- Hamburger Toggle BTN --> */}
@@ -21,7 +22,7 @@ const Header = (props: {
               e.stopPropagation();
               props.setSidebarOpen(!props.sidebarOpen);
             }}
-            className="z-99999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
+            className="z-9999 block rounded-sm border border-stroke bg-white p-1.5 shadow-sm dark:border-strokedark dark:bg-boxdark lg:hidden"
           >
             <span className="relative block h-5.5 w-5.5 cursor-pointer">
               <span className="du-block absolute right-0 h-full w-full">
@@ -58,7 +59,7 @@ const Header = (props: {
           {/* <!-- Hamburger Toggle BTN --> */}
 
           <Link className="block flex-shrink-0 lg:hidden" to="/">
-            <img src={LogoIcon} alt="Logo" />
+            <img className="w-18" src={T_Logo} alt="Logo" />
           </Link>
         </div>
 
@@ -100,7 +101,12 @@ const Header = (props: {
             </form>
           </div>
         ) : (
-          <h1 className="text-lg text-white font-bold tracking-widest">TRACKER</h1>
+          <div className="flex items-center hidden lg:block ">
+          <span className=" inline-block">
+          <img className="w-15 object-contain" loading="lazy" src={T_Logo} alt="Logo"  />
+            </span>
+          <h1 className="text-lg text-theme-light dark:text-white font-bold tracking-widest">TRACKER</h1>
+          </div>
         )}
 
         <div className="flex items-center gap-3 2xsm:gap-7">
@@ -112,7 +118,7 @@ const Header = (props: {
             {isLoggedIn() && (
               <>
                 <DropdownNotification />
-                <DropdownMessage />
+                {/* <DropdownMessage /> */}
               </>
             )}
           </ul>

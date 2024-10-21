@@ -1,121 +1,140 @@
-import { useState } from 'react';
-import { IoPencil } from 'react-icons/io5';
-import { FaUserTie } from 'react-icons/fa';
+import { useEffect, useState } from 'react';
+import { IoPencil, IoEyeSharp } from 'react-icons/io5';
 import { IoMdSearch, IoMdTrash } from 'react-icons/io';
-import { MdFilterAlt } from 'react-icons/md';
+import { FaFilter } from 'react-icons/fa';
+// import { MdFilterAlt } from 'react-icons/md';
 import { BsThreeDots } from 'react-icons/bs';
+import { ImFileEmpty } from 'react-icons/im';
 import { FaPlus } from 'react-icons/fa6';
 // import { DecodedUser, decodeToken, isLoggedIn } from '../../utils/authUtils';
-import { useDeleteSiteMutation, useGetSitesQuery } from './redux/api';
+import {
+  useDeletePlayerMutation,
+  useGetAllPlayersBySiteQuery,
+  useGetAllPlayersQuery,
+} from './redux/api';
 // import Paginator from '../../components/Pagination/Paginator';
-import UpdateSite from './UpdaterSite';
-import { Menu } from '@mantine/core';
-import { Site, SiteCoach } from './interface';
+import UpdateSite from './UpdaterPlayer';
+import { Autocomplete, Menu } from '@mantine/core';
+import { Player } from './interface';
 import ConfirmDeleteModal from '../../components/ConfirmDeleteModel';
 import toast from 'react-hot-toast';
-import AddSite from './AddSite';
-import SiteCoaches from './SiteCoaches';
-import { ImFileEmpty } from 'react-icons/im';
+import AddSite from './AddPlayer';
+import SelectSite from './SelectSite';
+import { useGetSitesQuery } from '../Sites/redux/api';
+import { set } from 'lodash';
+import AddPlayer from './AddPlayer';
+import SinglePlayer from './SinglePlayer';
+import Loader from '../../common/Loader';
 import TableLoader from '../../common/Loader/TableLoader';
-import { ErrorBoundary } from 'react-error-boundary';
-import ServerError from '../../components/errors/ServerError';
-import { useErrorBoundary } from 'react-error-boundary';
-import Paginator from "../../components/Pagination/Paginator";
 
-export default function SitesList() {
+export default function PlayersList() {
+  const [selectedSiteId, setSelectedSiteId] = useState<string | null>(null);
+  const { data: players, refetchPlayers } = useGetAllPlayersQuery();
+  const {
+    data: playersData,
+    error: playersError,
+    isLoading: isPlayersLoading,
+    refetch: refetchPlayersBySite,
+  } = useGetAllPlayersBySiteQuery(
+    { siteId: selectedSiteId },
+    { skip: !selectedSiteId }, // Skip fetching if no site is selected
+  );
   const {
     data: sites,
-    isLoading: isSitesLoading,
-    error: sitesError,
-    refetch,
+    isLoading: isLoadingSites,
+    isError: isErrorSites,
+    refetch: refetchSites,
   } = useGetSitesQuery();
-  const [onSubmit] = useDeleteSiteMutation();
+
+  const [onSubmit] = useDeletePlayerMutation();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
   const [isAddModalOpen, setIsAddModalOpen] = useState(false);
   const [isDeleteModalOpen, setisDeleteModalOpen] = useState(false);
-  const [isCoacherModalOpen, setisCoacherModalOpen] = useState(false);
-  const [siteCoaches, setsiteCoaches] = useState<SiteCoach[]>([]);
-  const [siteToAct, setsiteToAct] = useState<Site | null>(null);
-  const { showBoundary } = useErrorBoundary();
+  const [isPlayerModalOpen, setisPlayerModalOpen] = useState(false);
+  const [playerToAct, setplayerToAct] = useState<Player | null>(null);
+  const [filterValue, setfilterValue] = useState<string>('');
+  const [isSiteWrong, setisSiteWrong] = useState<boolean>(false);
 
-  const handleUpdateOpen = (site: Site) => {
+  useEffect(() => {
+    if (sites && sites?.result?.data.length > 0 && !selectedSiteId) {
+      setSelectedSiteId(sites.result.data[0].id);
+      setfilterValue(sites.result.data[0].name);
+    }
+  }, [sites, selectedSiteId]);
+
+  const handleUpdateOpen = (player: Player) => {
     setIsUpdateModalOpen(true);
-    setsiteToAct(site);
+    setplayerToAct(player);
   };
-  const handleDeleteOpen = async (site: Site) => {
+  const handleDeleteOpen = async (player: Player) => {
     setisDeleteModalOpen(true);
-    setsiteToAct(site);
+    setplayerToAct(player);
   };
-  const handleSiteDelete = async () => {
+  const handleSelect = async () => {
+    setisSiteWrong(false);
+    const selectedSite = sites?.result.data.find(
+      (site) => `${site.name}` === filterValue,
+    );
+    if (selectedSite) {
+      setSelectedSiteId(selectedSite.id);
+    } else {
+      setisSiteWrong(true);
+    }
+  };
+  const handlePlayerDelete = async () => {
     setisDeleteModalOpen(false);
     toast.promise(
-      onSubmit({ siteId: siteToAct!.id })
+      onSubmit({ playerId: playerToAct!.id })
         .unwrap()
         .then(() => {
-          setsiteToAct(null);
-          refetch();
+          setplayerToAct(null);
+          refetchPlayersBySite();
         }),
       {
-        loading: 'Deleting site...',
-        success: 'Site deleted successfully!',
+        loading: 'Deleting player...',
+        success: 'Player deleted successfully!',
         error: (error) =>
-          error.data.message || 'Failed to delete site. Please try again.',
+          error.data.message || 'Failed to delete player. Please try again.',
       },
     );
   };
-
-  if (sitesError) {
-    throw new Error('An error occurred while fetching sites');
-    // throw  sitesError;
-    // showBoundary(sitesError);
-  }
 
   const menus = [
     {
       label: 'Edit',
       icon: <IoPencil />,
-      action: (site: Site) => {
-        handleUpdateOpen(site);
+      action: (player: Player) => {
+        handleUpdateOpen(player);
       },
     },
     {
       label: 'Delete',
       icon: <IoMdTrash />,
-      action: (site: Site) => {
-        handleDeleteOpen(site);
+      action: (player: Player) => {
+        handleDeleteOpen(player);
       },
     },
     {
-      label: 'Coachs',
-      icon: <FaUserTie />,
-      action: (site: Site) => {
-        setisCoacherModalOpen(true);
-        setsiteCoaches(site.coaches);
-        setsiteToAct(site);
+      label: 'View',
+      icon: <IoEyeSharp />,
+      action: (player: Player) => {
+        setisPlayerModalOpen(true);
+        setplayerToAct(player);
       },
     },
   ];
   const columns = [
-    { Header: 'Site name', accessor: (row: Site) => row.name },
-    { Header: 'District', accessor: (row: Site) => row.district },
-    { Header: 'Province', accessor: (row: Site) => row.province.toUpperCase() },
-    {
-      Header: 'Added on',
-      accessor: (row: Site) => {
-        const date = new Date(row.createdAt);
-        const formattedDate = date.toLocaleDateString('en-US', {
-          day: 'numeric',
-          month: 'short',
-          year: 'numeric',
-        });
-        return formattedDate;
-      },
-    },
-    { Header: 'Coaches', accessor: (row: Site) => row.coaches.length },
+    { Header: 'First name', accessor: (row: Player) => row.firstName },
+    { Header: 'Last name', accessor: (row: Player) => row.lastName },
+    { Header: 'Age', accessor: (row: Player) => row.age },
+    { Header: 'Nationality', accessor: (row: Player) => row.nationality },
+    { Header: 'Position', accessor: (row: Player) => row.positions.join(', ') },
+    { Header: 'Foot', accessor: (row: Player) => row.foot },
   ];
 
   return (
     <>
+      <>
         {/* <!-- Start block --> */}
         <section className="p-3 sm:p-5 antialiased">
           <div className="mx-auto max-w-screen-xl">
@@ -147,33 +166,35 @@ export default function SitesList() {
                     data-modal-target="createProductModal"
                     data-modal-toggle="createProductModal"
                     onClick={() => setIsAddModalOpen(true)}
-                    className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-white focus:outline-none bg-theme-light rounded-lg hover:bg-theme-secondary hover:text-primary-700 focus:z-10  dark:bg-theme-dark dark:text-white dark:hover:text-white dark:hover:bg-theme-secondary"
+                    className="w-full md:w-auto flex items-center justify-center py-2.5 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                   >
                     <FaPlus />
-                    Add Site
+                    Add Player
                   </button>
                   <div className="flex items-center space-x-3 w-full md:w-auto">
+                    <div>
+                      <Autocomplete
+                        placeholder="Filter with site"
+                        value={filterValue}
+                        error={isSiteWrong}
+                        onChange={setfilterValue}
+                        data={sites?.result.data.map((site) => `${site.name}`)}
+                        styles={{
+                          input: { width: '100%', padding: '20px' },
+                          dropdown: { maxHeight: 200, overflowY: 'auto' },
+                        }}
+                      />
+                    </div>
+
                     <button
                       id="filterDropdownButton"
                       data-dropdown-toggle="filterDropdown"
-                      className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-theme-light  bg-white rounded-lg border-2  border-theme-light hover:bg-gray-100 hover:text-primary-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      className=" self-center w-full md:w-auto flex items-center justify-center py-2 px-2 text-sm font-medium text-theme-dark 00 focus:outline-none rounded-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-theme-dark "
+                      // className=" self-center w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-white focus:outline-none bg-theme-light rounded-lg border border-gray-200 hover:bg-theme-secondary hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-theme-dark dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-theme-secondary"
                       type="button"
+                      onClick={handleSelect}
                     >
-                      <MdFilterAlt />
-                      Filter
-                      <svg
-                        className="-mr-1 ml-1.5 w-5 h-5"
-                        fill="currentColor"
-                        viewBox="0 0 20 20"
-                        xmlns="http:www.w3.org/2000/svg"
-                        aria-hidden="true"
-                      >
-                        <path
-                          clipRule="evenodd"
-                          fillRule="evenodd"
-                          d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        />
-                      </svg>
+                      <FaFilter />
                     </button>
                   </div>
                 </div>
@@ -191,10 +212,10 @@ export default function SitesList() {
                     </tr>
                   </thead>
                   <tbody>
-                    {!isSitesLoading ? (
-                      sites?.result?.data?.length !== 0 ? (
-                        sites?.result.data.map(
-                          (row: Site, rowIndex: number) => (
+                    {!isPlayersLoading ? (
+                      playersData?.result.data.length !== 0 ? (
+                        playersData?.result.data.map(
+                          (row: Player, rowIndex: number) => (
                             <tr
                               key={rowIndex}
                               className="border-b dark:border-gray-700"
@@ -238,32 +259,25 @@ export default function SitesList() {
                           ),
                         )
                       ) : (
-                        <tr>
-                          <td
-                            colSpan={7}
-                            className="items-center font-semibold"
-                          >
-                            <div className="flex flex-col justify-center items-center py-2 ">
-                              <ImFileEmpty className="text-2xl flex items-center" />
-                              <p>No data</p>
-                            </div>
-                          </td>
-                        </tr>
-                      )
-                    ) : (
-                      <tr>
-                        <td colSpan={6} className="items-center font-semibold">
-                          <div className="flex flex-col justify-center items-center py-3">
-                            <TableLoader />
+                        <td colSpan={7} className="items-center font-semibold">
+                          <div className="flex flex-col justify-center items-center py-2 ">
+                            <ImFileEmpty className="text-2xl flex items-center" />
+                            <p>No data</p>
                           </div>
                         </td>
-                      </tr>
+                      )
+                    ) : (
+                      <td colSpan={7} className="items-center font-semibold">
+                        <div className="flex flex-col justify-center items-center py-3">
+                          <TableLoader />
+                        </div>
+                      </td>
                     )}
                   </tbody>
                 </table>
               </div>
               {/* pagination */}
-              <Paginator />
+              {/* <Paginator /> */}
             </div>
           </div>
         </section>
@@ -272,33 +286,33 @@ export default function SitesList() {
           <UpdateSite
             isOpen={isUpdateModalOpen}
             onClose={() => setIsUpdateModalOpen(false)}
-            site={siteToAct}
-            onSuccess={refetch}
+            player={playerToAct}
+            onSuccess={refetchPlayersBySite}
           />
         )}
-        {/* <!-- COaches model --> */}
-        <SiteCoaches
-          isOpen={isCoacherModalOpen}
-          onClose={() => setisCoacherModalOpen(false)}
-          coaches={siteCoaches}
-          onSuccess={refetch}
-          siteId={siteToAct?.id || ''}
-        />
         {/* {isUpdateModalOpen && ( */}
-        <AddSite
+        <AddPlayer
           isOpen={isAddModalOpen}
           onClose={() => setIsAddModalOpen(false)}
-          // site={siteToAct}
-          onSuccess={refetch}
+          siteId={selectedSiteId || ''}
+          onSuccess={refetchPlayersBySite}
         />
         {/* <!-- Delete model --> */}
         <ConfirmDeleteModal
           isOpen={isDeleteModalOpen}
           onClose={() => setisDeleteModalOpen(false)}
           action="Delete"
-          asset="Site"
-          onConfirm={handleSiteDelete}
+          asset="Player"
+          onConfirm={handlePlayerDelete}
         />
+        {/* <!-- SinglePlayer model --> */}
+        <SinglePlayer
+          isOpen={isPlayerModalOpen}
+          onClose={() => setisPlayerModalOpen(false)}
+          player={playerToAct}
+          onSuccess={refetchPlayersBySite}
+        />
+      </>
     </>
   );
 }
