@@ -20,9 +20,8 @@ import TableLoader from '../../common/Loader/TableLoader';
 import { ErrorBoundary } from 'react-error-boundary';
 import ServerError from '../../components/errors/ServerError';
 import { useErrorBoundary } from 'react-error-boundary';
-import Paginator from "../../components/Pagination/Paginator";
 
-export default function SitesList() {
+export default function Tests() {
   const {
     data: sites,
     isLoading: isSitesLoading,
@@ -147,7 +146,7 @@ export default function SitesList() {
                     data-modal-target="createProductModal"
                     data-modal-toggle="createProductModal"
                     onClick={() => setIsAddModalOpen(true)}
-                    className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-white focus:outline-none bg-theme-light rounded-lg hover:bg-theme-secondary hover:text-primary-700 focus:z-10  dark:bg-theme-dark dark:text-white dark:hover:text-white dark:hover:bg-theme-secondary"
+                    className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                   >
                     <FaPlus />
                     Add Site
@@ -156,7 +155,7 @@ export default function SitesList() {
                     <button
                       id="filterDropdownButton"
                       data-dropdown-toggle="filterDropdown"
-                      className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-theme-light  bg-white rounded-lg border-2  border-theme-light hover:bg-gray-100 hover:text-primary-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                      className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                       type="button"
                     >
                       <MdFilterAlt />
@@ -263,7 +262,7 @@ export default function SitesList() {
                 </table>
               </div>
               {/* pagination */}
-              <Paginator />
+              {/* <Paginator /> */}
             </div>
           </div>
         </section>

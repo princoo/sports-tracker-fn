@@ -5,6 +5,12 @@
 .mantine-Autocomplete-dropdown {
   z-index: 1001 !important;
 }
+.mantine-MultiSelect-dropdown{
+  z-index: 1001 !important;
+}
+.multiselect{
+  background-color: red
+}
 
 @layer base {
   body {

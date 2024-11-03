@@ -1,62 +1,97 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IoPencil } from 'react-icons/io5';
-import { IoMdSearch } from 'react-icons/io';
+import { IoMdSearch, IoMdTrash } from 'react-icons/io';
 import { MdFilterAlt } from 'react-icons/md';
 import { BsThreeDots } from 'react-icons/bs';
 import { FaPlus } from 'react-icons/fa6';
-import { DecodedUser, decodeToken, isLoggedIn } from '../../utils/authUtils';
-import { useGetUsersQuery } from './redux/api';
+
+// import { DecodedUser, decodeToken, isLoggedIn } from '../../utils/authUtils';
+import { useDeleteTestMutation, useGetTestsQuery } from './redux/api copy';
 // import Paginator from '../../components/Pagination/Paginator';
 import { Menu } from '@mantine/core';
-import UpdateUserRole from './UpdateUserRole';
-import { User } from './interface';
+import { Test } from './interface copy';
+import ConfirmDeleteModal from '../../components/ConfirmDeleteModel';
+import toast from 'react-hot-toast';
 import { ImFileEmpty } from 'react-icons/im';
 import TableLoader from '../../common/Loader/TableLoader';
+import AddTest from './AddTest';
+import { useDisclosure } from '@mantine/hooks';
+import PopOver from '../../components/PopOver';
+import UpdateTest from './UpdateTest';
 
-export default function UsersList() {
+export default function Tests() {
   const {
-    data: users,
-    isLoading: isUsersLoading,
+    data: sites,
+    isLoading: isTestsLoading,
+    error: TestsError,
     refetch,
-  } = useGetUsersQuery();
+  } = useGetTestsQuery();
+  const [onSubmit] = useDeleteTestMutation();
   const [isUpdateModalOpen, setIsUpdateModalOpen] = useState(false);
-  const [userToUpdate, setuserToUpdate] = useState<string | null>(null);
-  const [decodedUser, setdecodedUser] = useState<DecodedUser | null>(null);
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isDeleteModalOpen, setisDeleteModalOpen] = useState(false);
+  // const [isCoacherModalOpen, setisCoacherModalOpen] = useState(false);
+  // const [siteCoaches, setsiteCoaches] = useState<SiteCoach[]>([]);
+  const [testToAct, settestToAct] = useState<Test | null>(null);
 
-  useEffect(() => {
-    if (isLoggedIn()) {
-      const user = decodeToken();
-      setdecodedUser(user!);
-    }
-  }, []);
-
-  const handleUpdateOpen = (id: string) => {
+  const handleUpdateOpen = (test: Test) => {
     setIsUpdateModalOpen(true);
-    setuserToUpdate(id);
+    settestToAct(test);
   };
-  const handleRoleUpdateSuccess = () => {
-    refetch(); // Trigger a refetch of the users when the update is successful
+  const handleDeleteOpen = async (test: Test) => {
+    setisDeleteModalOpen(true);
+    settestToAct(test);
   };
+  const handleSiteDelete = async () => {
+    setisDeleteModalOpen(false);
+    toast.promise(
+      onSubmit({ testId: testToAct!.id })
+        .unwrap()
+        .then(() => {
+          settestToAct(null);
+          refetch();
+        }),
+      {
+        loading: 'Deleting Test...',
+        success: 'Test deleted successfully!',
+        error: (error) =>
+          error.data.message || 'Failed to delete Test. Please try again.',
+      },
+    );
+  };
+
+  if (TestsError) {
+    // throw new Error('An error occurred while fetching sites');
+    // throw  TestsError;
+    // showBoundary(TestsError);
+  }
 
   const menus = [
     {
-      label: 'Edit Role',
+      label: 'Edit',
       icon: <IoPencil />,
+      action: (test: Test) => {
+        handleUpdateOpen(test);
+      },
+    },
+    {
+      label: 'Delete',
+      icon: <IoMdTrash />,
+      action: (test: Test) => {
+        handleDeleteOpen(test);
+      },
     },
   ];
   const columns = [
-    { Header: 'First name', accessor: (row: User) => row.profile.firstName },
-    { Header: 'Last name', accessor: (row: User) => row.profile.lastName },
-    { Header: 'Email', accessor: (row: User) => row.email },
-    { Header: 'Phone', accessor: (row: User) => row.profile.phone },
-    { Header: 'Role', accessor: (row: User) => row.role.roleName },
-    { Header: 'Nationality', accessor: (row: User) => row.profile.nationality },
+    { Header: 'Test name', accessor: (row: Test) => row.name },
+    { Header: 'Description', accessor: (row: Test) => row.description },
+    // { Header: 'Required metrics', accessor: (row: Test) => row.requiredMetrics.length },
   ];
 
   return (
     <>
       {/* <!-- Start block --> */}
-      <section className="p-3 sm:p-5 antialiased">
+      <section className="p-3 sm:p-5 antialiased ">
         <div className="mx-auto max-w-screen-xl">
           {/* <!-- Start coding here --> */}
           <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
@@ -85,10 +120,11 @@ export default function UsersList() {
                   id="createProductModalButton"
                   data-modal-target="createProductModal"
                   data-modal-toggle="createProductModal"
-                  className="flex items-center justify-center text-white bg-primary-700 hover:bg-primary-800 focus:ring-4 focus:ring-primary-300 font-medium rounded-lg text-sm px-4 py-2 dark:bg-primary-600 dark:hover:bg-primary-700 focus:outline-none dark:focus:ring-primary-800"
+                  onClick={() => setIsAddModalOpen(true)}
+                  className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
                 >
                   <FaPlus />
-                  Add User
+                  Add Test
                 </button>
                 <div className="flex items-center space-x-3 w-full md:w-auto">
                   <button
@@ -125,13 +161,14 @@ export default function UsersList() {
                         {column.Header}
                       </th>
                     ))}
+                    <th>Required metrics</th>
                     <th>Actions</th>
                   </tr>
                 </thead>
                 <tbody>
-                  {!isUsersLoading ? (
-                    users?.result.data.length !== 0 ? (
-                      users?.result.data.map((row: any, rowIndex: number) => (
+                  {!isTestsLoading ? (
+                    sites?.result?.data?.length !== 0 ? (
+                      sites?.result.data.map((row: Test, rowIndex: number) => (
                         <tr
                           key={rowIndex}
                           className="border-b dark:border-gray-700"
@@ -142,9 +179,10 @@ export default function UsersList() {
                             </td>
                           ))}
                           <>
+                            <PopOver row={row} />
                             <Menu shadow="md" width={200}>
-                              <td>
-                                <Menu.Target>
+                              <Menu.Target>
+                                <td>
                                   <button
                                     id="apple-imac-27-dropdown-button"
                                     className="inline-flex items-center text-sm font-medium hover:bg-gray-100 dark:hover:bg-gray-700 p-1.5 dark:hover-bg-gray-800 text-center text-gray-500 hover:text-gray-800 rounded-lg focus:outline-none dark:text-gray-400 dark:hover:text-gray-100"
@@ -152,15 +190,15 @@ export default function UsersList() {
                                   >
                                     <BsThreeDots />
                                   </button>
-                                </Menu.Target>
-                              </td>
+                                </td>
+                              </Menu.Target>
 
                               <Menu.Dropdown>
                                 {menus.map((menu, idx) => (
                                   <Menu.Item
                                     key={idx}
                                     leftSection={menu.icon}
-                                    onClick={() => handleUpdateOpen(row.id)}
+                                    onClick={() => menu.action(row)}
                                   >
                                     {menu.label}
                                   </Menu.Item>
@@ -182,7 +220,7 @@ export default function UsersList() {
                     )
                   ) : (
                     <tr>
-                      <td colSpan={7} className="items-center font-semibold">
+                      <td colSpan={6} className="items-center font-semibold">
                         <div className="flex flex-col justify-center items-center py-3">
                           <TableLoader />
                         </div>
@@ -197,14 +235,37 @@ export default function UsersList() {
           </div>
         </div>
       </section>
-      {/* <!-- End block --> */}
-
-      {/* update */}
-      <UpdateUserRole
-        isOpen={isUpdateModalOpen}
-        onClose={() => setIsUpdateModalOpen(false)}
-        userId={userToUpdate}
-        onSuccess={handleRoleUpdateSuccess}
+      {/* <!-- Update model --> */}
+      {isUpdateModalOpen && (
+        <UpdateTest
+          isOpen={isUpdateModalOpen}
+          onClose={() => setIsUpdateModalOpen(false)}
+          test={testToAct}
+          onSuccess={refetch}
+        />
+      )}
+      {/* <!-- COaches model --> */}
+      {/* <SiteCoaches
+          isOpen={isCoacherModalOpen}
+          onClose={() => setisCoacherModalOpen(false)}
+          coaches={siteCoaches}
+          onSuccess={refetch}
+          siteId={siteToAct?.id || ''}
+        /> */}
+      {/* {isUpdateModalOpen && ( */}
+      <AddTest
+        isOpen={isAddModalOpen}
+        onClose={() => setIsAddModalOpen(false)}
+        // site={siteToAct}
+        onSuccess={refetch}
+      />
+      {/* <!-- Delete model --> */}
+      <ConfirmDeleteModal
+        isOpen={isDeleteModalOpen}
+        onClose={() => setisDeleteModalOpen(false)}
+        action="Delete"
+        asset="Test"
+        onConfirm={handleSiteDelete}
       />
     </>
   );

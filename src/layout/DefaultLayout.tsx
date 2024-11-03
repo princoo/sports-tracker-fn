@@ -12,13 +12,13 @@ const DefaultLayout = () => {
       {/* <!-- ===== Page Wrapper Start ===== --> */}
       <div className="flex h-screen overflow-hidden">
         {/* <!-- ===== Sidebar Start ===== --> */}
-        <div className="z-z-999">
+        <div className="z-999">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen}/>
         </div>
         {/* <!-- ===== Sidebar End ===== --> */}
 
         {/* <!-- ===== Content Area Start ===== --> */}
-        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden">
+        <div className="relative flex flex-1 flex-col overflow-y-auto overflow-x-hidden bg-theme-white dark:bg-[#111927]">
           {/* <!-- ===== Header Start ===== --> */}
           {/* <div className="z-999"> */}
           <Header sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
@@ -27,7 +27,8 @@ const DefaultLayout = () => {
 
           {/* <!-- ===== Main Content Start ===== --> */}
           <main>
-            <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10">
+            <div className="mt-6">
+            {/* <div className="mx-auto max-w-screen-2xl p-4 md:p-6 2xl:p-10  bg-red"> */}
               {/* {children} */}
               <Outlet />
             </div>

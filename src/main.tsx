@@ -12,6 +12,8 @@ import { persistor, store } from './redux/store';
 import { Toaster } from "react-hot-toast";
 import { PersistGate } from "redux-persist/integration/react";
 import { MantineProvider } from "@mantine/core";
+import { ErrorBoundary } from 'react-error-boundary';  
+import FallBackErrorComponent from "./components/errors/FallbackComponent";
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   <React.StrictMode>
@@ -19,7 +21,9 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <PersistGate loading={<p>Loading...</p>} persistor={persistor}>
     <MantineProvider>
     <Router>
+    <ErrorBoundary FallbackComponent={FallBackErrorComponent}>
       <App />
+    </ErrorBoundary>
     </Router>
     </MantineProvider>
     <Toaster position='top-center' reverseOrder={false} />

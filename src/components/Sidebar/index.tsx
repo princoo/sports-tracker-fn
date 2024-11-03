@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
-import { GiSoccerField } from 'react-icons/gi';
+import { GiSoccerField, GiSoccerKick } from 'react-icons/gi';
+import { SiVlcmediaplayer } from "react-icons/si";
+import { SlEvent } from "react-icons/sl";
 import SidebarLinkGroup from './SidebarLinkGroup';
 // import Logo from '../../images/logo/logo.svg';
 import Logo from '../../images/logo/sports_logo.svg';
@@ -279,10 +281,45 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   UserRoleEnum.FOOTBALL_DIRECTOR,
                 ]}
               />
+              <NavItem
+                label="Players"
+                path="/players"
+                pathName="players"
+                icon={<GiSoccerKick />}
+                requiredRole={[
+                  UserRoleEnum.HSO,
+                  UserRoleEnum.TECHNICIAN,
+                  UserRoleEnum.COACH,
+                  UserRoleEnum.CEO,
+                  UserRoleEnum.ADMIN,
+                  UserRoleEnum.FOOTBALL_DIRECTOR,
+                ]}
+              />
+              <NavItem
+                label="Tests"
+                path="/tests"
+                pathName="tests"
+                icon={<SiVlcmediaplayer />}
+                requiredRole={[
+                  UserRoleEnum.HSO,
+                  UserRoleEnum.ADMIN,
+                ]}
+              />
+              <NavItem
+                label="Sessions"
+                path="/sessions"
+                pathName="sessions"
+                icon={<SlEvent />}
+                requiredRole={[
+                  UserRoleEnum.HSO,
+                  UserRoleEnum.COACH,
+                  UserRoleEnum.ADMIN,
+                ]}
+              />
               {/* <!-- Menu Item Profile --> */}
 
               {/* <!-- Menu Item Forms --> */}
-              <SidebarLinkGroup
+              {/* <SidebarLinkGroup
                 activeCondition={
                   pathname === '/forms' || pathname.includes('forms')
                 }
@@ -352,7 +389,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           />
                         </svg>
                       </NavLink>
-                      {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${
                           !open && 'hidden'
@@ -383,15 +419,14 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </li>
                         </ul>
                       </div>
-                      {/* <!-- Dropdown Menu End --> */}
                     </React.Fragment>
                   );
                 }}
-              </SidebarLinkGroup>
+              </SidebarLinkGroup> */}
               {/* <!-- Menu Item Forms --> */}
 
               {/* <!-- Menu Item Tables --> */}
-              <li>
+              {/* <li>
                 <NavLink
                   to="/tables"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -425,11 +460,11 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </svg>
                   Tables
                 </NavLink>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Tables --> */}
 
               {/* <!-- Menu Item Settings --> */}
-              <li>
+              {/* <li>
                 <NavLink
                   to="/settings"
                   className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
@@ -468,19 +503,19 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   </svg>
                   Settings
                 </NavLink>
-              </li>
+              </li> */}
               {/* <!-- Menu Item Settings --> */}
             </ul>
           </div>
 
           {/* <!-- Others Group --> */}
-          <div>
+        
+        </nav> {/* <div>
             <h3 className="mb-4 ml-4 text-sm font-semibold text-bodydark2">
               OTHERS
             </h3>
 
             <ul className="mb-6 flex flex-col gap-1.5">
-              {/* <!-- Menu Item Chart --> */}
               <li>
                 <NavLink
                   to="/chart"
@@ -520,9 +555,7 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                   Chart
                 </NavLink>
               </li>
-              {/* <!-- Menu Item Chart --> */}
 
-              {/* <!-- Menu Item Ui Elements --> */}
               <SidebarLinkGroup
                 activeCondition={pathname === '/ui' || pathname.includes('ui')}
               >
@@ -594,7 +627,6 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           />
                         </svg>
                       </NavLink>
-                      {/* <!-- Dropdown Menu Start --> */}
                       <div
                         className={`translate transform overflow-hidden ${
                           !open && 'hidden'
@@ -625,17 +657,13 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                           </li>
                         </ul>
                       </div>
-                      {/* <!-- Dropdown Menu End --> */}
                     </React.Fragment>
                   );
                 }}
               </SidebarLinkGroup>
-              {/* <!-- Menu Item Ui Elements --> */}
 
-              {/* <!-- Menu Item Auth Pages --> */}
             </ul>
           </div>
-        </nav>
         {/* <!-- Sidebar Menu --> */}
       </div>
     </aside>
