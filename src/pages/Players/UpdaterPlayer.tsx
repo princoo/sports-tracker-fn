@@ -82,12 +82,12 @@ export default function UpdatePlayer(props: {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div>
-        <div className="relative p-4 w-full max-w-2xl max-h-full">
+        <div className="relative">
           {/* <!-- Modal content --> */}
-          <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+          <div className="relative p-2 bg-white dark:bg-gray-800">
             {/* <!-- Modal header --> */}
             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-theme-light dark:text-white">
                 Update Player
               </h3>
               <button
@@ -208,7 +208,7 @@ export default function UpdatePlayer(props: {
                   </label>
                   <div className="relative">
                     <select
-                      className="w-full rounded-lg border border-stroke bg-transparent p-2.5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       defaultValue=""
                       {...register('nationality', {
                         required: {
@@ -240,7 +240,7 @@ export default function UpdatePlayer(props: {
                   </label>
                   <div className="relative">
                     <select
-                      className="w-full rounded-lg border border-stroke bg-transparent p-2.5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       defaultValue=""
                       {...register('gender', {
                         required: {
@@ -317,7 +317,7 @@ export default function UpdatePlayer(props: {
                   </label>
                   <div className="relative">
                     <select
-                      className="w-full rounded-lg border border-stroke bg-transparent p-2.5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       defaultValue=""
                       {...register('foot', {
                         required: {
@@ -357,9 +357,9 @@ export default function UpdatePlayer(props: {
                       searchable
                       classNames={{
                         input:
-                          'bg-white dark:bg-gray-800 text-black dark:text-white', // Changes based on the mode
+                          'bg-gray-50 dark:bg-gray-800 text-black dark:text-white', // Changes based on the mode
                         dropdown:
-                          'text-black dark:text-white dark:hover:text-blue-500',
+                          'text-gray-900 dark:text-white dark:hover:text-blue-500',
                       }}
                     />
                   </div>
@@ -386,7 +386,7 @@ export default function UpdatePlayer(props: {
                   </label>
                   <div className="relative">
                     <select
-                      className="w-full rounded-lg border border-stroke bg-transparent p-2.5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       defaultValue=""
                       {...register('acadStatus', {
                         required: {

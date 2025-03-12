@@ -55,12 +55,12 @@ export default function AddPlayer(props: {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div >
-        <div className="relative p-4 w-full max-w-2xl max-h-full">
+        <div className="relative">
           {/* <!-- Modal content --> */}
-          <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+          <div className="relative sm:p-2 bg-white rounded-lg  dark:bg-gray-800">
             {/* <!-- Modal header --> */}
             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-theme-light dark:text-white">
                 Add Player
               </h3>
               <button
@@ -179,9 +179,9 @@ export default function AddPlayer(props: {
                   >
                     Nationality
                   </label>
-                  <div className="relative">
+                  <div className="relative ">
                     <select
-                      className="w-full rounded-lg border border-stroke bg-transparent p-2.5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       defaultValue=""
                       {...register('nationality', {
                         required: {
@@ -213,7 +213,7 @@ export default function AddPlayer(props: {
                   </label>
                   <div className="relative">
                     <select
-                      className="w-full rounded-lg border border-stroke bg-transparent p-2.5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       defaultValue=""
                       {...register('gender', {
                         required: {
@@ -251,7 +251,7 @@ export default function AddPlayer(props: {
                       },
                       setValueAs: (value) => Number(value),
                     })}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600  block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
                   />
                   {errors.height && (
                     <div className="text-red-500">{errors.height.message}</div>
@@ -290,7 +290,7 @@ export default function AddPlayer(props: {
                   </label>
                   <div className="relative">
                     <select
-                      className="w-full rounded-lg border border-stroke bg-transparent p-2.5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       defaultValue=""
                       {...register('foot', {
                         required: {
@@ -330,9 +330,9 @@ export default function AddPlayer(props: {
                       searchable
                       classNames={{
                         input:
-                          'bg-white dark:bg-gray-800 text-black dark:text-white', // Changes based on the mode
+                          'bg-gray-50 dark:bg-gray-800 text-black dark:text-white', // Changes based on the mode
                         dropdown:
-                          'text-black dark:text-white dark:hover:text-blue-500',
+                          'text-gray-900 dark:text-theme-light dark:hover:text-blue-500',
                       }}
                     />
                   </div>
@@ -359,7 +359,7 @@ export default function AddPlayer(props: {
                   </label>
                   <div className="relative">
                     <select
-                      className="w-full rounded-lg border border-stroke bg-transparent p-2.5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="w-full rounded-lg border border-stroke bg-gray-50 p-2.5 text-gray-900 outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
                       defaultValue=""
                       {...register('acadStatus', {
                         required: {

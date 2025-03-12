@@ -14,22 +14,23 @@ import {
 } from './redux/api';
 // import Paginator from '../../components/Pagination/Paginator';
 import UpdateSite from './UpdaterPlayer';
-import { Autocomplete, Menu } from '@mantine/core';
+import { Autocomplete, Menu, useMantineTheme } from '@mantine/core';
 import { Player } from './interface';
 import ConfirmDeleteModal from '../../components/ConfirmDeleteModel';
 import toast from 'react-hot-toast';
 import AddSite from './AddPlayer';
-import SelectSite from './SelectSite';
+// import SelectSite from './SelectSite';
 import { useGetSitesQuery } from '../Sites/redux/api';
 import { set } from 'lodash';
 import AddPlayer from './AddPlayer';
 import SinglePlayer from './SinglePlayer';
 import Loader from '../../common/Loader';
 import TableLoader from '../../common/Loader/TableLoader';
+import SearchBox from "../../components/SearchBox";
 
 export default function PlayersList() {
   const [selectedSiteId, setSelectedSiteId] = useState<string | null>(null);
-  const { data: players, refetchPlayers } = useGetAllPlayersQuery();
+  // const { data: players, refetchPlayers } = useGetAllPlayersQuery();
   const {
     data: playersData,
     error: playersError,
@@ -141,24 +142,7 @@ export default function PlayersList() {
             {/* <!-- Start coding here --> */}
             <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden">
               <div className="flex flex-col md:flex-row items-center justify-between space-y-3 md:space-y-0 md:space-x-4 p-4">
-                <div className="w-full md:w-1/2">
-                  <form className="flex items-center">
-                    <label htmlFor="simple-search" className="sr-only">
-                      Search
-                    </label>
-                    <div className="relative w-full">
-                      <div className="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                        <IoMdSearch />
-                      </div>
-                      <input
-                        type="text"
-                        id="simple-search"
-                        className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full pl-10 p-2 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
-                        placeholder="Search"
-                      />
-                    </div>
-                  </form>
-                </div>
+                <SearchBox />
                 <div className="w-full md:w-auto flex flex-col md:flex-row space-y-2 md:space-y-0 items-stretch md:items-center justify-end md:space-x-3 flex-shrink-0">
                   <button
                     type="button"
@@ -166,7 +150,7 @@ export default function PlayersList() {
                     data-modal-target="createProductModal"
                     data-modal-toggle="createProductModal"
                     onClick={() => setIsAddModalOpen(true)}
-                    className="w-full md:w-auto flex items-center justify-center py-2.5 px-4 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-gray-700"
+                    className="w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-white focus:outline-none bg-theme-light rounded-lg hover:bg-theme-secondary hover:text-primary-700 focus:z-10  dark:bg-theme-dark dark:text-white dark:hover:text-white dark:hover:bg-theme-secondary"
                   >
                     <FaPlus />
                     Add Player
@@ -183,14 +167,19 @@ export default function PlayersList() {
                           input: { width: '100%', padding: '20px' },
                           dropdown: { maxHeight: 200, overflowY: 'auto' },
                         }}
+                        classNames={{
+                          input:
+                            'bg-white dark:bg-gray-800 text-black dark:text-theme-light', // Changes based on the mode
+                          dropdown:
+                            'text-black dark:text-theme-light dark:hover:text-blue-500',
+                        }}
                       />
                     </div>
 
                     <button
                       id="filterDropdownButton"
                       data-dropdown-toggle="filterDropdown"
-                      className=" self-center w-full md:w-auto flex items-center justify-center py-2 px-2 text-sm font-medium text-theme-dark 00 focus:outline-none rounded-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-theme-dark "
-                      // className=" self-center w-full md:w-auto flex items-center justify-center py-2 px-4 text-sm font-medium text-white focus:outline-none bg-theme-light rounded-lg border border-gray-200 hover:bg-theme-secondary hover:text-primary-700 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:bg-theme-dark dark:text-gray-400 dark:border-gray-600 dark:hover:text-white dark:hover:bg-theme-secondary"
+                      className=" self-center w-full md:w-auto flex items-center justify-center py-2 px-2 text-sm font-medium text-theme-light 00 focus:outline-none rounded-lg border border-gray-200 hover:bg-gray-100 focus:z-10 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-700 dark:text-gray-400 dark:border-gray-600 dark:hover:text-theme-dark "
                       type="button"
                       onClick={handleSelect}
                     >

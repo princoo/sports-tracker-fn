@@ -122,10 +122,10 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                     <React.Fragment>
                       <NavLink
                         to="#"
-                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
+                        className={`group relative flex items-center gap-2.5 rounded-sm px-4 py-2 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-theme-secondary hover:text-white dark:hover:bg-meta-4 ${
                           (pathname === '/' ||
                             pathname.includes('dashboard')) &&
-                          'bg-graydark dark:bg-meta-4'
+                          'bg-white text-gray-800 dark:text-white dark:bg-meta-4'
                         }`}
                         onClick={(e) => {
                           e.preventDefault();
@@ -236,8 +236,8 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
               <li>
                 <NavLink
                   to="/profile"
-                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-graydark dark:hover:bg-meta-4 ${
-                    pathname.includes('profile') && 'bg-graydark dark:bg-meta-4'
+                  className={`group relative flex items-center gap-2.5 rounded-sm py-2 px-4 font-medium text-bodydark1 duration-300 ease-in-out hover:bg-theme-secondary hover:text-white dark:hover:bg-meta-4 ${
+                    pathname.includes('profile') && 'bg-white text-gray-800 dark:text-white dark:bg-meta-4'
                   }`}
                 >
                   <svg
@@ -312,6 +312,30 @@ const Sidebar = ({ sidebarOpen, setSidebarOpen }: SidebarProps) => {
                 icon={<SlEvent />}
                 requiredRole={[
                   UserRoleEnum.HSO,
+                  UserRoleEnum.COACH,
+                  UserRoleEnum.ADMIN,
+                ]}
+              />
+              <NavItem
+                label="Player tests"
+                path="/player/tests"
+                pathName="/player/tests"
+                icon={<SlEvent />}
+                requiredRole={[
+                  UserRoleEnum.HSO,
+                  UserRoleEnum.TECHNICIAN,
+                  UserRoleEnum.COACH,
+                  UserRoleEnum.ADMIN,
+                ]}
+              />
+              <NavItem
+                label="Stats"
+                path="/stats"
+                pathName="stats"
+                icon={<SlEvent />}
+                requiredRole={[
+                  UserRoleEnum.HSO,
+                  UserRoleEnum.TECHNICIAN,
                   UserRoleEnum.COACH,
                   UserRoleEnum.ADMIN,
                 ]}

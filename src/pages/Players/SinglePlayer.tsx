@@ -28,15 +28,15 @@ export default function SinglePlayer(props: {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       {player && (
-        <article className="rounded-xl border overflow-hidden border-gray-700 bg-[#EEEEF0] dark:bg-theme-dark pt-5">
-          <div className="flex gap-2 flex-col mx-10">
+        <article className=" overflow-hidden bg-white dark:bg-theme-dark">
+          <div className="flex gap-2 flex-col">
             {player.gender === Gender.MALE || player.gender === Gender.OTHER ? (
               <SlUser className="size-30 rounded-full object-cover" />
             ) : (
-              <SlUserFemale className="size-30 rounded-full object-cover" />
+              <SlUserFemale className="text-8xl text-gray-400 object-cover" />
             )}
             <div>
-              <h3 className="text-xl font-medium text-theme-dark dark:text-white">
+              <h3 className="text-xl font-medium text-theme-light dark:text-white">
                 <span>
                   {player.firstName} &nbsp;
                   {player.lastName}
@@ -49,7 +49,7 @@ export default function SinglePlayer(props: {
             </div>
           </div>
 
-          <div className="mt-5 pb-5 flex flex-col gap-2 rounded-t-3xl w-full px-10">
+          <div className="mt-5 pb-5 flex flex-col gap-2 w-full">
             <div className="flex justify-between p-1  items-center ">
               <div className="flex flex-col">
                 <p className="font-medium text-gray-600 dark:text-black-2 text-sm">

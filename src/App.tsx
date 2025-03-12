@@ -27,6 +27,8 @@ import Home from './pages/Home';
 // import Tests from "./pages/tests";
 import Tests from "./pages/tests/index copy";
 import SessionsList from "./pages/Sessions";
+import PlayerTests from "./pages/PlayerTests";
+import Stats from "./pages/Stats";
 
 function App() {
   // const [loading, setLoading] = useState<boolean>(true);
@@ -168,6 +170,44 @@ function App() {
                   requiredRole={[
                     UserRoleEnum.HSO,
                     UserRoleEnum.COACH,
+                    UserRoleEnum.ADMIN,
+                  ]}
+                />
+              }
+            />
+            <Route
+              path="/player/tests"
+              element={
+                <ProtectedRoute
+                  element={
+                    <>
+                      <PageTitle title="Player Tests" />
+                      <PlayerTests />
+                    </>
+                  }
+                  requiredRole={[
+                    UserRoleEnum.HSO,
+                    UserRoleEnum.COACH,
+                    UserRoleEnum.TECHNICIAN,
+                    UserRoleEnum.ADMIN,
+                  ]}
+                />
+              }
+            />
+            <Route
+              path="/stats"
+              element={
+                <ProtectedRoute
+                  element={
+                    <>
+                      <PageTitle title="Players Stats" />
+                      <Stats />
+                    </>
+                  }
+                  requiredRole={[
+                    UserRoleEnum.HSO,
+                    UserRoleEnum.COACH,
+                    UserRoleEnum.TECHNICIAN,
                     UserRoleEnum.ADMIN,
                   ]}
                 />

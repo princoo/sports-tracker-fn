@@ -4,7 +4,7 @@ import T_Logo from '../../images/logo/t_logo.png';
 import { useForm } from 'react-hook-form';
 import { useLoginMutation } from './redux/api';
 import { LoginPayload } from './redux/interface';
-import sideImage from '../../images/login/side_image.png'
+import sideImage from '../../images/login/side_image.png';
 
 const SignIn: React.FC = () => {
   const navigate = useNavigate();
@@ -12,7 +12,7 @@ const SignIn: React.FC = () => {
 
   useEffect(() => {
     if (isSuccess) {
-      navigate('/')
+      navigate('/');
     }
   }, [isSuccess]);
   const {
@@ -23,33 +23,30 @@ const SignIn: React.FC = () => {
 
   return (
     <>
-      {/* <Breadcrumb pageName="Sign In" /> */}
-
       <div className=" rounded-sm border border-stroke shadow-default dark:border-strokedark dark:bg-theme-dark">
         <div className="flex flex-wrap items-center">
-          <div className="hidden w-full xl:block xl:w-1/2">
-            <div className=" text-center bg-theme-light dark:bg-theme-dark">{/* py-17.5 px-26 */}
-              <Link className=" inline-block" to="/">
-                <img className="w-35 object-contain" loading="lazy" src={T_Logo} alt="Logo"  />
-              </Link>
+          <div
+            className="relative hidden w-full lg:flex lg:w-1/2  items-center justify-start h-[80vh] md:h-[100vh] "
+            style={{
+              backgroundImage: `url(${sideImage})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center top',
+            }}
+          >
+            <div className="z-1 text-start ml-5">
 
-              <p className="2xl:px-20 font-medium text-white text-lg">
-              Track your performance, Improve your game!
+              <p className="2xl:px-20 font-medium text-white text-4xl ">
+                Track your performance,<br/> Improve your game!
               </p>
-
-              <span className="mt-1 inline-block">
-            <img loading="lazy" src={sideImage} alt="side image" />
-              </span>
             </div>
+            <div className="absolute opacity-70 inset-0 bg-gradient-to-b from-purple-400 to-theme-light"></div>
           </div>
 
-          <div className="w-full border-stroke dark:border-strokedark xl:w-1/2 xl:border-l-2">
-            <div className="w-full px-12"> {/*p-4 sm:p-12.5 xl:p-17.5 */}
-              {/* <span className="mb-1.5 block font-medium">Start for free</span> */}
+          <div className="w-full border-stroke dark:border-strokedark lg:w-1/2 xl:border-l-2">
+            <div className="w-full px-12">
               <h2 className="mb-9 text-2xl font-bold text-theme-light dark:text-white sm:text-title-xl2">
                 Sign In to Tracker
               </h2>
-
               <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="mb-4">
                   <label className="mb-2.5 block font-medium text-theme-light dark:text-white">
@@ -95,7 +92,7 @@ const SignIn: React.FC = () => {
 
                 <div className="mb-6">
                   <label className="mb-2.5 block font-medium text-theme-light dark:text-white">
-                   Password
+                    Password
                   </label>
                   <div className="relative">
                     <input
@@ -154,11 +151,11 @@ const SignIn: React.FC = () => {
                     type="submit"
                     value={isLoading ? 'Loading...' : 'Sign In'}
                     className="w-full cursor-pointer rounded-lg border border-theme-light bg-theme-light p-4 text-white transition hover:bg-opacity-90"
-                    disabled = {isLoading}
+                    disabled={isLoading}
                   />
                 </div>
 
-                <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
+                {/* <button className="flex w-full items-center justify-center gap-3.5 rounded-lg border border-stroke bg-gray p-4 hover:bg-opacity-50 dark:border-strokedark dark:bg-meta-4 dark:hover:bg-opacity-50">
                   <span>
                     <svg
                       width="20"
@@ -193,7 +190,7 @@ const SignIn: React.FC = () => {
                     </svg>
                   </span>
                   Sign in with Google
-                </button>
+                </button> */}
 
                 <div className="mt-6 text-center">
                   <p>
