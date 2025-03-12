@@ -1,3 +1,4 @@
+import CenterModal from "./CenterModal";
 import Modal from './Modal';
 
 const ConfirmDeleteModal = (props: {
@@ -9,7 +10,7 @@ const ConfirmDeleteModal = (props: {
 }) => {
   const { isOpen, action, asset, onClose, onConfirm } = props;
   return (
-    <Modal isOpen={isOpen} onClose={onClose}>
+    <CenterModal isOpen={isOpen} onClose={onClose}>
       <div className="bg-white dark:bg-gray-800 p-6">
         <h3 className="text-lg font-bold text-gray-900 dark:text-gray-200">
           {`Confirm ${action}`}
@@ -35,7 +36,7 @@ const ConfirmDeleteModal = (props: {
           </button>
         </div>
       </div>
-    </Modal>
+    </CenterModal>
   );
 };
 

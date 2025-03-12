@@ -26,3 +26,16 @@ export enum TestMetrics {
   distance = 'distance', // distance covered (e.g., in speed test)
   ballControll = 'ballControll', // how the player controls the ball during a test
 }
+export interface TestMetricsInterface {
+  accuracy?: number;
+  bodyPosition?: number;
+  totalTime?: number;
+  attempts?: number;
+  successes?: number;
+  power?: number;
+  conesTouched?: number;
+  foot?: 'LEFT' | 'RIGHT' | null;
+  errors?: number;
+  distance?: number;
+  ballControll?: number;
+}

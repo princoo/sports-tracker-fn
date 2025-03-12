@@ -6,6 +6,7 @@ import { CiClock2 } from 'react-icons/ci';
 import { MdFilterAlt } from 'react-icons/md';
 import { BsThreeDots } from 'react-icons/bs';
 import { FaClockRotateLeft } from 'react-icons/fa6';
+import moment from 'moment';
 // import { DecodedUser, decodeToken, isLoggedIn } from '../../utils/authUtils';
 import { useDeleteSessionMutation, useGetSessionsQuery } from './redux/api';
 // import Paginator from '../../components/Pagination/Paginator';
@@ -22,8 +23,8 @@ import { useErrorBoundary } from 'react-error-boundary';
 import Paginator from '../../components/Pagination/Paginator';
 import { TbTimelineEvent } from 'react-icons/tb';
 import { PiRadioactive } from 'react-icons/pi';
-import { Test } from "../tests/interface copy";
-import AddSession from "./AddSession";
+import { Test } from '../tests/interface copy';
+import AddSession from './AddSession';
 
 export default function SessionsList() {
   const {
@@ -93,7 +94,7 @@ export default function SessionsList() {
       <section className=" antialiased dark:bg-gray-900">
         <div className="max-w-screen-xl">
           <div className="mx-5 md:ml-30 max-w-3xl space-y-6 sm:space-y-5">
-            <h2 className="text-xl font-semibold text-gray-900 dark:text-white sm:text-2xl">
+            <h2 className="font-medium text-theme-light dark:text-white sm:text-2xl">
               Training Sessions
             </h2>
 
@@ -101,7 +102,7 @@ export default function SessionsList() {
               <span className="mb-4 flex aspect-square h-14 w-14 shrink-0 items-center sm:mb-0">
                 <TbTimelineEvent className="text-6xl text-gray-400" />
               </span>
-              <p className="min-w-0 flex-1  text-gray-900 dark:text-white">
+              <p className="min-w-0 flex-1  text-gray-800 dark:text-white">
                 <span>
                   View and manage your training sessions. you can also schedule
                   new sessions from the calender.
@@ -145,19 +146,16 @@ export default function SessionsList() {
                       <span
                         className={`inline-flex items-center rounded ${
                           session.isActive ? 'bg-green-500' : ''
-                        } px-2.5 py-0.5 text-xs font-medium text-primary-800 dark:text-white`}
+                        } px-2.5 py-0.5 text-xs  text-primary-800 dark:text-white`}
                       >
-                        {new Date(session.date).toLocaleDateString('en-US', {
-                          day: 'numeric',
-                          month: 'short',
-                          year: 'numeric',
-                        })}
+                        {moment(session.date).local().format('MMM D, YYYY')}
                       </span>
-                      <p className="mb-0.5 mt-2 text-lg font-medium text-gray-900 dark:text-gray-300">
+                      <p className=" font-medium text-gray-800 dark:text-gray-300">
                         Session is {session.status.toLowerCase()}
                       </p>
-                      <p className="text-base font-normal text-primary-700 dark:text-primary-300">
-                        The training team will conduct {session.tests.length}  test(s) associated with this session.
+                      <p className="text-sm text-gray-800">
+                        The training team will conduct {session.tests.length}{' '}
+                        test(s) associated with this session.
                       </p>
                     </li>
                   ))

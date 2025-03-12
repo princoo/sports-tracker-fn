@@ -98,7 +98,7 @@ export default function SiteCoaches(props: {
 
   return (
     <Modal isOpen={isOpen} onClose={handleModalClose}>
-      <div className="w-full max-w-md p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+      <div className=" bg-white p-2 dark:bg-gray-800">
         <div className="flex md:justify-between md:items-center justify-start mb-4 md:flex-row flex-col">
           <h5 className="text-xl font-bold leading-none text-gray-900 dark:text-white flex items-center mb-5 md:mb-0 ">
             <FaUserTie />

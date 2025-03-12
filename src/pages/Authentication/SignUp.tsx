@@ -26,7 +26,6 @@ const SignUp: React.FC = () => {
   } = useForm<SignUpPayload>();
   return (
     <>
-      {/* <Breadcrumb pageName="Sign Up" /> */}
 
       <div className="rounded-sm border border-stroke bg-white shadow-default dark:border-strokedark dark:bg-boxdark">
         <div className="flex flex-wrap items-cente">

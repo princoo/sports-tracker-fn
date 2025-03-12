@@ -63,12 +63,12 @@ export default function AddSession(props: {
   return (
     <Modal isOpen={isOpen} onClose={onClose}>
       <div>
-        <div className="relative p-4 w-full max-w-2xl max-h-full">
+        <div className="relative">
           {/* <!-- Modal content --> */}
-          <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+          <div className="relative p-2 bg-white dark:bg-gray-800">
             {/* <!-- Modal header --> */}
             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
+              <h3 className="text-lg font-semibold text-theme-light dark:text-white">
                 Add Session
               </h3>
               <button

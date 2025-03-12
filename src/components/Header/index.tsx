@@ -13,7 +13,7 @@ const Header = (props: {
 }) => {
   return (
     <header className="z-50 sticky top-0 flex w-full bg-white drop-shadow-1 dark:bg-boxdark dark:drop-shadow-none">
-      <div className="flex flex-grow items-center justify-between px-4 py-4 shadow-2 md:px-6 2xl:px-11">
+      <div className="flex flex-grow items-center justify-between px-4 py-3 shadow-2 md:px-6 2xl:px-11">
         <div className="flex items-center gap-2 sm:gap-4 lg:hidden">
           {/* <!-- Hamburger Toggle BTN --> */}
           <button
@@ -64,7 +64,7 @@ const Header = (props: {
         </div>
 
         {/*  search button */}
-        {isLoggedIn() ? (
+        {isLoggedIn() && (
           <div className="hidden sm:block">
             <form action="https://formbold.com/s/unique_form_id" method="POST">
               <div className="relative">
@@ -100,20 +100,19 @@ const Header = (props: {
               </div>
             </form>
           </div>
-        ) : (
-          <div className="flex items-center hidden lg:block ">
-          <span className=" inline-block">
-          <img className="w-15 object-contain" loading="lazy" src={T_Logo} alt="Logo"  />
-            </span>
+        )} 
+        {/* : (
+          <div className="flex items-center">
+          <img className="w-10 object-contain" loading="lazy" src={T_Logo} alt="Logo"  />
           <h1 className="text-lg text-theme-light dark:text-white font-bold tracking-widest">TRACKER</h1>
           </div>
-        )}
+        )} */}
 
         <div className="flex items-center gap-3 2xsm:gap-7">
           <ul className="flex items-center gap-2 2xsm:gap-4">
             {/* <!-- Dark Mode Toggler --> */}
-            <DarkModeSwitcher />
             {/* <!-- Dark Mode Toggler --> */}
+            <DarkModeSwitcher />
 
             {isLoggedIn() && (
               <>

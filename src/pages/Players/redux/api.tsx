@@ -1,7 +1,7 @@
 import toast from 'react-hot-toast';
 import baseApi from '../../../core/baseApi';
 import { DefaultResponse } from '../../../core/interface';
-import { PlayerPayload, Site } from '../interface';
+import { Player, PlayerPayload } from '../interface';
 import { User } from '../../Users/interface';
 
 interface DeleteSitePayload {
@@ -9,7 +9,7 @@ interface DeleteSitePayload {
 }
 export const siteApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    getAllPlayers: builder.query<DefaultResponse<Site[]>, void>({
+    getAllPlayers: builder.query<DefaultResponse<Player[]>, void>({
       query: () => ({
         url: 'players',
         method: 'GET',
@@ -22,7 +22,7 @@ export const siteApi = baseApi.injectEndpoints({
         }
       },
     }),
-    getAllPlayersBySite: builder.query<DefaultResponse<Site[]>, {siteId: string | null}>({
+    getAllPlayersBySite: builder.query<DefaultResponse<Player[]>, {siteId: string | null}>({
       query: ({siteId}) => ({
         url: `players/${siteId}`,
         method: 'GET',
@@ -35,7 +35,7 @@ export const siteApi = baseApi.injectEndpoints({
         }
       },
     }),
-    getSitePlayers: builder.query<DefaultResponse<User[]>, { siteId: string }>({
+    getSitePlayers: builder.query<DefaultResponse<Player[]>, { siteId: string }>({
       query: ({ siteId }) => ({
         url: `players/${siteId}`,
         method: 'GET',
@@ -49,7 +49,7 @@ export const siteApi = baseApi.injectEndpoints({
       },
     }),
     getSinglePlayers: builder.query<
-      DefaultResponse<User[]>,
+      DefaultResponse<Player>,
       { playerId: string }
     >({
       query: ({ playerId }) => ({

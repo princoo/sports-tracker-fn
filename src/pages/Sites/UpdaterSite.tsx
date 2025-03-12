@@ -56,9 +56,9 @@ export default function UpdateSite(props: {
   return (
     <Modal isOpen={isOpen} onClose={handleClose}>
       <div>
-        <div className="relative p-4 w-full max-w-2xl max-h-full">
+        <div className="relative">
           {/* <!-- Modal content --> */}
-          <div className="relative p-4 bg-white rounded-lg shadow dark:bg-gray-800 sm:p-5">
+          <div className="relative p-2 bg-white">
             {/* <!-- Modal header --> */}
             <div className="flex justify-between items-center pb-4 mb-4 rounded-t border-b sm:mb-5 dark:border-gray-600">
               <h3 className="text-lg font-semibold text-gray-900 dark:text-white">
@@ -92,7 +92,7 @@ export default function UpdateSite(props: {
                         message: 'Site name is required',
                       },
                     })}
-                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500"
+                    className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg  focus:border-theme-light block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:border-primary-500"
                     // placeholder="Site name"
                   />
                   {errors.name && (
@@ -108,7 +108,7 @@ export default function UpdateSite(props: {
                   </label>
                   <div className="relative">
                     <select
-                      className="w-full rounded-lg border border-stroke bg-transparent p-2.5 text-black outline-none focus:border-primary focus-visible:shadow-none dark:border-form-strokedark dark:bg-form-input dark:text-white dark:focus:border-primary"
+                      className="bg-gray-50 w-full rounded-lg border border-stroke p-2.5 text-gray-800 dark:bg-form-input dark:text-white focus:border-theme-light"
                       defaultValue=""
                       {...register('province', {
                         required: {

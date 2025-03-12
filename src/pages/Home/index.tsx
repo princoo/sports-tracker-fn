@@ -79,7 +79,7 @@ export default function Home() {
               </a>
             </motion.div>
           </div>
-          <div className="hidden lg:mt-0 lg:col-span-5 lg:flex justify-center bg-gray-500 rounded-3xl bg-opacity-30">
+          <div className="hidden lg:mt-0 lg:col-span-5 lg:flex justify-center rounded-3xl">
             <motion.div
               ref={ref}
               initial={{ opacity: 0, x: 100 }} // Start with hidden and off the screen
@@ -90,7 +90,12 @@ export default function Home() {
             >
               {/* <img className="w-full dark:hidden" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup.svg" alt="dashboard image" /> */}
               {/* <img className="w-full hidenn dark:block opacity-60 rounded-xl" src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup-dark.svg" alt="dashboard image" /> */}
-              <img src={chart} alt="mockup" className="w-80" />
+              {/* <img src={chart} alt="mockup" className="w-80" /> */}
+              {/* <img
+              className="w-full opacity-60 rounded-xl"
+              src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/cta/cta-dashboard-mockup-dark.svg"
+              alt="dashboard image"
+            /> */}
             </motion.div>
           </div>
         </div>
